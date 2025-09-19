@@ -213,7 +213,7 @@ const Navbar = ({ businessName, navLinks, onNavClick, currentPage }) => {
       {/* Navbar utama */}
       <nav className="container mx-auto px-6 py-2 flex justify-between items-center">
         <div className="flex items-center space-x-2">
-          <a href="#" onClick={() => handleNavClickWrapper('beranda')} className="flex items-center">
+          <a href="/" onClick={() => handleNavClickWrapper('beranda')} className="flex items-center">
             <img src="/ifyone.png" alt="IFYOne Logo" className="h-20 w-auto mr-2" />
           </a>
         </div>
@@ -221,8 +221,11 @@ const Navbar = ({ businessName, navLinks, onNavClick, currentPage }) => {
           {navLinks.map((link) => (
             <a
               key={link.id}
-              href="#"
-              onClick={() => handleNavClickWrapper(link.id)}
+              href={link.id === 'daftar' ? '/daftar' : '#'}
+              onClick={(e) => {
+                e.preventDefault();
+                handleNavClickWrapper(link.id);
+              }}
               className={`text-gray-300 hover:text-orange-400 text-sm transition duration-300 relative group
               ${currentPage === link.id ? 'text-orange-400 font-bold' : ''}
               `}
@@ -249,8 +252,11 @@ const Navbar = ({ businessName, navLinks, onNavClick, currentPage }) => {
           {navLinks.map((link) => (
             <a
               key={link.id}
-              href="#"
-              onClick={() => handleNavClickWrapper(link.id)}
+              href={link.id === 'daftar' ? '/daftar' : '#'}
+              onClick={(e) => {
+                e.preventDefault();
+                handleNavClickWrapper(link.id);
+              }}
               className="text-gray-300 hover:text-orange-400 transition duration-300 text-lg font-semibold"
             >
               {link.label}
@@ -685,8 +691,11 @@ const Footer = ({ footer, onNavClick }) => (
               {column.items.map((item, itemIndex) => (
                 <li key={itemIndex}>
                   <a
-                    href="#"
-                    onClick={() => onNavClick(item.id)}
+                    href={item.id === 'daftar' ? '/daftar' : '#'}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      onNavClick(item.id);
+                    }}
                     className="text-gray-400 hover:text-orange-400 transition-colors duration-300"
                   >
                     {item.label}
@@ -716,6 +725,29 @@ const App = () => {
     { id: "kontak", label: "Kontak" },
     { id: "daftar", label: "Daftar" }
   ];
+
+  // Efek untuk memantau URL dan memperbarui status halaman
+  useEffect(() => {
+    const handleUrlChange = () => {
+      const path = window.location.pathname;
+      if (path === '/daftar') {
+        setCurrentPage('daftar');
+      } else {
+        setCurrentPage('beranda');
+      }
+    };
+
+    // Panggil saat komponen dimuat
+    handleUrlChange();
+
+    // Dengarkan peristiwa perubahan URL (misal: tombol 'back' browser)
+    window.addEventListener('popstate', handleUrlChange);
+
+    // Hapus event listener saat komponen dilepas
+    return () => {
+      window.removeEventListener('popstate', handleUrlChange);
+    };
+  }, []);
 
   useEffect(() => {
     const styleId = 'custom-blob-styles';
@@ -766,14 +798,21 @@ const App = () => {
   }, []);
 
   const handleNavClick = (id) => {
+    const newPath = id === 'daftar' ? '/daftar' : '/';
+    // Gunakan history.pushState untuk mengubah URL tanpa memuat ulang halaman
+    window.history.pushState({}, '', newPath);
+
     if (id === 'daftar') {
       setCurrentPage('daftar');
+      window.scrollTo(0, 0); // Gulir ke atas halaman baru
     } else {
       setCurrentPage('beranda');
       setTimeout(() => {
         const element = document.getElementById(id);
         if (element) {
           element.scrollIntoView({ behavior: 'smooth' });
+        } else if (id === 'beranda') {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
         }
       }, 50);
     }
