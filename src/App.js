@@ -28,7 +28,7 @@ const MOCK_DATA = {
     { name: "Telkomsel", url: "/telkomsel.png", alt: "Logo Telkomsel" },
     { name: "Indosat Ooredoo", url: "/indosat.png", alt: "Logo Indosat" },
     { name: "XL Axiata", url: "/xl.png", alt: "Logo XL Axiata" },
-    { name: "Three", url: "/Three.png", alt: "Logo Three" },
+    { name: "Three", url: "/three.png", alt: "Logo Three" },
     { name: "Byu", url: "/byu.png", alt: "Logo Byu" },
     { name: "Smartfren", url: "/Smartfren.png", alt: "Logo Smartfren" },
   ],
