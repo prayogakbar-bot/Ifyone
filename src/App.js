@@ -221,7 +221,7 @@ const Navbar = ({ businessName, navLinks, onNavClick, currentPage }) => {
           {navLinks.map((link) => (
             <a
               key={link.id}
-              href={link.id === 'daftar' ? '/daftar' : '#'}
+              href="#"
               onClick={(e) => {
                 e.preventDefault();
                 handleNavClickWrapper(link.id);
@@ -252,7 +252,7 @@ const Navbar = ({ businessName, navLinks, onNavClick, currentPage }) => {
           {navLinks.map((link) => (
             <a
               key={link.id}
-              href={link.id === 'daftar' ? '/daftar' : '#'}
+              href="#"
               onClick={(e) => {
                 e.preventDefault();
                 handleNavClickWrapper(link.id);
@@ -691,7 +691,7 @@ const Footer = ({ footer, onNavClick }) => (
               {column.items.map((item, itemIndex) => (
                 <li key={itemIndex}>
                   <a
-                    href={item.id === 'daftar' ? '/daftar' : '#'}
+                    href="#"
                     onClick={(e) => {
                       e.preventDefault();
                       onNavClick(item.id);
@@ -798,10 +798,12 @@ const App = () => {
   }, []);
 
   const handleNavClick = (id) => {
-    const newPath = id === 'daftar' ? '/daftar' : '/';
-    // Gunakan history.pushState untuk mengubah URL tanpa memuat ulang halaman
-    window.history.pushState({}, '', newPath);
-
+    // Cek jika linknya bukan 'daftar' sebelum mengubah URL
+    if (id !== 'daftar') {
+      const newPath = '/';
+      window.history.pushState({}, '', newPath);
+    }
+    
     if (id === 'daftar') {
       setCurrentPage('daftar');
       window.scrollTo(0, 0); // Gulir ke atas halaman baru
