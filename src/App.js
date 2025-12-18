@@ -159,7 +159,7 @@ const MOCK_DATA = {
     items: [
       {
         icon: <MapPin className="h-6 w-6 text-orange-400" />,
-        label: "Bogor,Indonesia",
+        label: "Kota Bekasi,Indonesia",
       },
       {
         icon: <Phone className="h-6 w-6 text-orange-400" />,
