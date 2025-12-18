@@ -1,4 +1,21 @@
 {
+<<<<<<< HEAD
+  "name": "broadcast-bot",
+  "version": "1.0.0",
+  "description": "Bot Telegram Broadcast Otomatis",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "axios": "^1.13.2",
+    "node-cron": "^3.0.3"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+=======
   "name": "ify",
   "version": "0.1.0",
   "private": true,
@@ -50,4 +67,5 @@
     "postcss": "^8.4.24",
     "tailwindcss": "^3.4.7"
   }
+>>>>>>> 5ea251588425664df0ef64fd0fb53dbe9068b6fb
 }
