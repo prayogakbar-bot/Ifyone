@@ -129,7 +129,7 @@ const MOCK_DATA = {
     items: [
       {
         question: "Bagaimana cara mendaftar di IFYOne?",
-        answer: "Anda bisa mendaftar dengan mengisi formulir di halaman 'Daftar' atau menghubungi tim support kami. Proses pendaftaran cepat dan mudah."
+        answer: "Anda bisa mendaftar dengan mengisi formulir di halaman 'Pendaftaran' atau menghubungi tim support kami. Proses pendaftaran cepat dan mudah."
       },
       {
         question: "Apakah ada biaya pendaftaran?",
@@ -185,8 +185,7 @@ const MOCK_DATA = {
       { heading: "Layanan", items: [{ label: "Server Pulsa", id: "layanan" }, { label: "PPOB", id: "layanan" }, { label: "Top-Up Game", id: "layanan" }, { label: "API", id: "layanan" }] },
       { heading: "Perusahaan", items: [{ label: "Tentang Kami", id: "tentang" }, { label: "Portofolio", id: "beranda" }, { label: "Karir", id: "beranda" }, { label: "Blog", id: "beranda" }] },
       { heading: "Dukungan", items: [{ label: "FAQ", id: "faq" }, { label: "Kontak Kami", id: "kontak" }, { label: "Kebijakan Privasi", id: "beranda" }, { label: "Syarat & Ketentuan", id: "beranda" }] },
-      // Menambahkan kembali link "Daftar" di footer
-      { heading: "Bergabung", items: [{ label: "Daftar", id: "daftar" }] },
+      { heading: "Bergabung", items: [{ label: "Login", id: "login" }, { label: "Daftar Harga", id: "harga" }, { label: "Pendaftaran", id: "daftar" }] },
     ],
     copyright: "© 2025 IFYOne. Semua Hak Cipta Dilindungi.",
   },
@@ -205,16 +204,15 @@ const Navbar = ({ businessName, navLinks, onNavClick, currentPage }) => {
 
   const handleNavClickWrapper = (id) => {
     onNavClick(id);
-    setIsMenuOpen(false); // Sembunyikan menu setelah navigasi
+    setIsMenuOpen(false); 
   };
 
   return (
     <header className="fixed w-full z-50 bg-gray-900 bg-opacity-70 backdrop-filter backdrop-blur-lg">
-      {/* Navbar utama */}
       <nav className="container mx-auto px-6 py-2 flex justify-between items-center">
         <div className="flex items-center space-x-2">
-          <a href="/" onClick={() => handleNavClickWrapper('beranda')} className="flex items-center">
-            <img src="/ifyone.png" alt="IFYOne Logo" className="h-20 w-auto mr-2" />
+          <a href="/" onClick={(e) => { e.preventDefault(); handleNavClickWrapper('beranda'); }} className="flex items-center">
+            <img src="/header.png" alt="IFYOne Logo" className="h-20 w-auto mr-2" />
           </a>
         </div>
         <div className="hidden md:flex space-x-6 items-center">
@@ -235,14 +233,12 @@ const Navbar = ({ businessName, navLinks, onNavClick, currentPage }) => {
             </a>
           ))}
         </div>
-        {/* Tombol menu untuk mobile */}
         <div className="md:hidden">
           <button onClick={toggleMenu} className="text-white focus:outline-none">
             {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
       </nav>
-      {/* Menu mobile - Menggunakan max-height untuk transisi yang lebih handal */}
       <div
         className={`md:hidden overflow-hidden transition-all duration-500 ease-in-out ${
           isMenuOpen ? 'max-h-screen opacity-100 py-4' : 'max-h-0 opacity-0'
@@ -336,9 +332,6 @@ const HeroSection = ({ hero }) => {
             className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ease-in-out ${
               index === bgImageIndex ? 'opacity-30' : 'opacity-0'
             }`}
-            onError={(e) => {
-              e.target.src = `https://placehold.co/1920x1080/0d0d0d/e5e5e5?text=Gambar+Tidak+Tersedia`;
-            }}
           />
         ))}
       </div>
@@ -364,7 +357,6 @@ const HeroSection = ({ hero }) => {
               <span className="inline-block w-0.5 h-full bg-orange-400 animate-blink align-top"></span>
             </span>
           </div>
-          {/* Ikon pendukung di dalam hero section */}
           <div className="flex justify-center space-x-6 mt-6 text-orange-400">
             <Smartphone className="h-10 w-10 animate-bounce" />
             <Wallet className="h-10 w-10 animate-bounce animation-delay-500" />
@@ -408,7 +400,6 @@ const AdvantagesSection = ({ advantages }) => {
   const refs = useRef([]);
 
   useEffect(() => {
-    // Intersection Observer to handle scroll-in animation
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach(entry => {
@@ -420,7 +411,6 @@ const AdvantagesSection = ({ advantages }) => {
                 newVisible[index] = true;
                 return newVisible;
               });
-              // Stop observing once visible
               observer.unobserve(entry.target);
             }
           }
@@ -429,7 +419,7 @@ const AdvantagesSection = ({ advantages }) => {
       {
         root: null,
         rootMargin: '0px',
-        threshold: 0.2, // Trigger when 20% of the element is visible
+        threshold: 0.2,
       }
     );
 
@@ -472,7 +462,6 @@ const AdvantagesSection = ({ advantages }) => {
 const AboutSection = ({ about }) => (
   <Section id="tentang" title={about.title} subtitle={about.subtitle}>
     <div className="flex flex-col lg:flex-row items-center justify-between gap-12 max-w-6xl mx-auto">
-      {/* Video di sisi kiri untuk tampilan desktop */}
       <div className="w-full lg:w-1/2">
         <video
           className="w-full aspect-[16/9] rounded-xl shadow-lg border border-gray-700 object-cover"
@@ -484,7 +473,6 @@ const AboutSection = ({ about }) => (
           playsInline
         />
       </div>
-      {/* Teks di sisi kanan */}
       <div className="w-full lg:w-1/2 text-lg text-gray-300 leading-relaxed space-y-6 text-center lg:text-left">
         {about.paragraphs.map((paragraph, index) => (
           <p key={index}>{paragraph}</p>
@@ -657,16 +645,12 @@ const ContactSection = ({ contact }) => {
   );
 };
 
-// ===================================================================================
-// KOMPONEN BARU: Footer
-// ===================================================================================
 const Footer = ({ footer, onNavClick }) => (
   <footer className="bg-gray-800 py-12 px-4 md:px-8 border-t border-gray-700">
     <div className="container mx-auto">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center md:text-left">
-        {/* Kolom Logo & Sosial Media */}
         <div className="flex flex-col items-center md:items-start">
-          <img src="/ifyone.png" alt="IFYOne Logo" className="h-20 w-auto mb-4" />
+          <img src="/header.png" alt="IFYOne Logo" className="h-20 w-auto mb-4" />
           <p className="text-gray-400 mb-4">Solusi Terdepan untuk Bisnis Digital Anda.</p>
           <div className="flex space-x-4">
             {footer.socialMedia.map((social, index) => (
@@ -683,7 +667,6 @@ const Footer = ({ footer, onNavClick }) => (
           </div>
         </div>
 
-        {/* Kolom Tautan Navigasi */}
         {footer.links.map((column, colIndex) => (
           <div key={colIndex} className="space-y-4">
             <h4 className="text-xl font-bold text-white mb-2">{column.heading}</h4>
@@ -723,10 +706,11 @@ const App = () => {
     { id: "layanan", label: "Layanan" },
     { id: "faq", label: "FAQ" },
     { id: "kontak", label: "Kontak" },
-    { id: "daftar", label: "Daftar" }
+    { id: "login", label: "Login" },
+    { id: "harga", label: "Daftar Harga" },
+    { id: "daftar", label: "Pendaftaran" }
   ];
 
-  // Efek untuk memantau URL dan memperbarui status halaman
   useEffect(() => {
     const handleUrlChange = () => {
       const path = window.location.pathname;
@@ -736,14 +720,8 @@ const App = () => {
         setCurrentPage('beranda');
       }
     };
-
-    // Panggil saat komponen dimuat
     handleUrlChange();
-
-    // Dengarkan peristiwa perubahan URL (misal: tombol 'back' browser)
     window.addEventListener('popstate', handleUrlChange);
-
-    // Hapus event listener saat komponen dilepas
     return () => {
       window.removeEventListener('popstate', handleUrlChange);
     };
@@ -798,26 +776,32 @@ const App = () => {
   }, []);
 
   const handleNavClick = (id) => {
-    // Cek jika linknya bukan 'daftar' sebelum mengubah URL
-    if (id !== 'daftar') {
-      const newPath = '/';
-      window.history.pushState({}, '', newPath);
+    // Redirect Eksternal
+    if (id === 'daftar') {
+      window.open('https://ifyone.digiswitch.id/register', '_blank');
+      return; 
+    }
+    if (id === 'login') {
+      window.open('https://ifyone.digiswitch.id/login', '_blank');
+      return; 
+    }
+    if (id === 'harga') {
+      window.open('https://ifyone.digiswitch.id/price#!', '_blank');
+      return; 
     }
     
-    if (id === 'daftar') {
-      setCurrentPage('daftar');
-      window.scrollTo(0, 0); // Gulir ke atas halaman baru
-    } else {
-      setCurrentPage('beranda');
-      setTimeout(() => {
-        const element = document.getElementById(id);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-        } else if (id === 'beranda') {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-      }, 50);
-    }
+    // Logika navigasi internal asli
+    const newPath = '/';
+    window.history.pushState({}, '', newPath);
+    setCurrentPage('beranda');
+    setTimeout(() => {
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      } else if (id === 'beranda') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }, 50);
   };
 
   const scrollToTop = () => {
@@ -845,7 +829,6 @@ const App = () => {
           </>
         )}
       </main>
-      {/* Footer dan tombol scroll-to-top hanya ditampilkan jika tidak di halaman 'daftar' */}
       {currentPage !== 'daftar' && (
         <>
           <Footer footer={MOCK_DATA.footer} onNavClick={handleNavClick} />
