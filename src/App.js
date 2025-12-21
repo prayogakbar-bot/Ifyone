@@ -778,15 +778,15 @@ const App = () => {
   const handleNavClick = (id) => {
     // Redirect Eksternal
     if (id === 'daftar') {
-      window.open('https://ifyone.digiswitch.id/register', '_blank');
+      window.open('https://ifyone.web.id/register', '_blank');
       return; 
     }
     if (id === 'login') {
-      window.open('https://ifyone.digiswitch.id/login', '_blank');
+      window.open('https://ifyone.web.id/login', '_blank');
       return; 
     }
     if (id === 'harga') {
-      window.open('https://ifyone.digiswitch.id/price#!', '_blank');
+      window.open('https://ifyone.web.id/price', '_blank');
       return; 
     }
     
